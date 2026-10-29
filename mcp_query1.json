@@ -1,0 +1,15 @@
+﻿{
+  "jsonrpc": "2.0",
+  "id": 3,
+  "method": "tools/call",
+  "params": {
+    "name": "search_screens",
+    "arguments": {
+      "query": "hotel room detail screen with amenities and reserve button",
+      "platform": "ios",
+      "limit": 5,
+      "mode": "standard",
+      "task_intent": "Designing multi-page boutique hotel website with room detail pages and sticky reservation bottom bar"
+    }
+  }
+}

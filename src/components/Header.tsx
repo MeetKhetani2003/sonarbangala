@@ -12,8 +12,10 @@ import {
   CalendarCheck,
   ShieldCheck,
   Camera,
+  Lock,
 } from 'lucide-react';
 import BrandLogo from './BrandLogo';
+import WhatsAppIcon from './WhatsAppIcon';
 import {
   HOTEL_PHONE_DISPLAY,
   GOOGLE_MAPS_LINK,
@@ -160,14 +162,14 @@ export default function Header({ onOpenInquiryModal, onOpenStaffModal }: HeaderP
 
           {/* Right Header Actions */}
           <div className="flex items-center gap-3">
-            {/* Direct WhatsApp Concierge Button in Sunset Coral */}
+            {/* Direct WhatsApp Concierge Button */}
             <a
               href={buildWhatsAppUrl({ source: 'header' })}
               target="_blank"
               rel="noopener noreferrer"
               className="hidden sm:inline-flex items-center gap-1.5 text-[#0F2C59] bg-[#0F2C59]/10 hover:bg-[#0F2C59]/15 text-xs font-semibold px-3.5 py-2 rounded-full transition-colors"
             >
-              <MessageCircle className="w-3.5 h-3.5 text-[#FF6B6B] fill-[#FF6B6B]" />
+              <WhatsAppIcon className="w-3.5 h-3.5 fill-[#25D366]" />
               <span>WhatsApp Chat</span>
             </a>
 
@@ -278,21 +280,17 @@ export default function Header({ onOpenInquiryModal, onOpenStaffModal }: HeaderP
                 </button>
               </div>
 
-              {/* Staff Portal Link */}
-              {onOpenStaffModal && (
-                <div className="pt-2">
-                  <button
-                    onClick={() => {
-                      setMobileMenuOpen(false);
-                      onOpenStaffModal();
-                    }}
-                    className="w-full flex items-center justify-center gap-2 text-[#0F2C59] bg-[#0F2C59]/10 hover:bg-[#0F2C59]/15 text-xs font-semibold py-2.5 rounded-xl transition-colors cursor-pointer"
-                  >
-                    <Camera className="w-3.5 h-3.5 text-[#0F2C59]" />
-                    <span>Staff Photo Upload</span>
-                  </button>
-                </div>
-              )}
+              {/* Staff & Admin Portal Link */}
+              <div className="pt-2">
+                <Link
+                  href="/admin"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full flex items-center justify-center gap-2 text-[#0F2C59] bg-[#0F2C59]/10 hover:bg-[#0F2C59]/15 text-xs font-semibold py-2.5 rounded-xl transition-colors cursor-pointer"
+                >
+                  <Lock className="w-3.5 h-3.5 text-[#0F2C59]" />
+                  <span>Admin &amp; Staff Dashboard</span>
+                </Link>
+              </div>
             </div>
 
             {/* Drawer Bottom Quick Action */}
@@ -308,9 +306,9 @@ export default function Header({ onOpenInquiryModal, onOpenStaffModal }: HeaderP
                 href={buildWhatsAppUrl({ source: 'mobile_drawer' })}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 flex items-center justify-center gap-1.5 bg-[#FF6B6B] hover:bg-[#fa5b5b] text-white font-semibold py-3 rounded-xl text-xs transition-colors shadow-xs"
+                className="flex-1 flex items-center justify-center gap-1.5 bg-[#25D366] hover:bg-[#20ba59] text-white font-semibold py-3 rounded-xl text-xs transition-colors shadow-xs"
               >
-                <MessageCircle className="w-3.5 h-3.5 fill-white text-[#FF6B6B]" />
+                <WhatsAppIcon className="w-3.5 h-3.5 fill-white" />
                 <span>WhatsApp</span>
               </a>
             </div>

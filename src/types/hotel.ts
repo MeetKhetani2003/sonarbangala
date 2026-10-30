@@ -51,6 +51,10 @@ export interface AttractionProximity {
   travelTime: string;
   icon: string;
   description: string;
+  insiderTip?: string;
+  mapQuery?: string;
+  recommendedMode?: 'Walk' | 'Scooter' | 'Cab' | 'Pickup';
+  image?: string;
 }
 
 export interface FAQItem {

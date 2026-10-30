@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import {
   X,
   Camera,
@@ -11,6 +12,7 @@ import {
   Sparkles,
   Lock,
   ArrowRight,
+  ExternalLink,
 } from 'lucide-react';
 import { GalleryPhoto } from '@/types/hotel';
 
@@ -37,22 +39,7 @@ export default function StaffAdminModal({
     null
   );
 
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
   if (!isOpen) return null;
-
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64 = reader.result as string;
-        setPreviewUrl(base64);
-        setPhotoUrl(base64);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
 
   const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
@@ -69,7 +56,7 @@ export default function StaffAdminModal({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!photoUrl) {
-      setStatusMessage({ type: 'error', text: 'Please upload an image or provide an image URL.' });
+      setStatusMessage({ type: 'error', text: 'Please enter an image URL.' });
       return;
     }
     if (!title) {
@@ -97,28 +84,26 @@ export default function StaffAdminModal({
         onPhotoUploaded(data.photo);
         setStatusMessage({
           type: 'success',
-          text: '✓ Photo uploaded and published to Goa Moments gallery!',
+          text: '✓ Photo uploaded and published to MongoDB Goa Moments gallery!',
         });
         setTimeout(() => {
           onClose();
-          // Reset form
           setPhotoUrl('');
-          setPreviewUrl(null);
           setTitle('');
           setCaption('');
+          setPreviewUrl(null);
           setStatusMessage(null);
         }, 1500);
       } else {
         setStatusMessage({
           type: 'error',
-          text: data.message || 'Failed to upload photo.',
+          text: data.message || 'Failed to save photo to database',
         });
       }
-    } catch (err) {
-      console.error(err);
+    } catch {
       setStatusMessage({
         type: 'error',
-        text: 'Network error while publishing photo.',
+        text: 'Network error publishing photo',
       });
     } finally {
       setIsSubmitting(false);
@@ -127,24 +112,17 @@ export default function StaffAdminModal({
 
   return (
     <div className="fixed inset-0 z-50 bg-stone-950/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-in fade-in duration-200">
-      <div className="bg-white rounded-3xl max-w-xl w-full max-h-[92vh] overflow-y-auto shadow-2xl border border-stone-200 flex flex-col">
-        {/* Modal Header */}
-        <div className="p-5 sm:p-6 border-b border-stone-200 flex items-center justify-between bg-stone-900 text-white rounded-t-3xl">
+      <div className="bg-white rounded-3xl max-w-lg w-full max-h-[92vh] overflow-y-auto shadow-2xl border border-stone-200 flex flex-col">
+        {/* Header */}
+        <div className="p-5 border-b border-blue-950 flex items-center justify-between bg-[#0F2C59] text-white rounded-t-3xl">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/30">
-              <Camera className="w-5 h-5" />
-            </div>
+            <Camera className="w-5 h-5 text-[#E5A93C]" />
             <div>
-              <div className="flex items-center gap-1.5">
-                <h3 className="font-serif font-bold text-lg sm:text-xl">
-                  Staff Quick Photo Upload
-                </h3>
-                <span className="text-[10px] bg-amber-500/20 text-amber-300 font-semibold px-2 py-0.5 rounded-full">
-                  1-Click CMS
-                </span>
-              </div>
-              <p className="text-xs text-stone-400">
-                Instantly update the guest-facing Goa Moments gallery
+              <h3 className="font-serif font-semibold text-lg text-white">
+                Hotel Staff Quick Portal
+              </h3>
+              <p className="text-xs text-stone-200">
+                Connected directly to MongoDB Gallery &amp; Inquiries
               </p>
             </div>
           </div>
@@ -170,45 +148,38 @@ export default function StaffAdminModal({
             </div>
           )}
 
-          {/* Image Picker / Camera Upload */}
-          <div>
-            <label className="text-xs font-bold text-stone-700 block mb-1.5">
-              1. Take Photo or Select from Mobile Camera
-            </label>
-            <div
-              onClick={() => fileInputRef.current?.click()}
-              className="border-2 border-dashed border-stone-300 hover:border-amber-600 rounded-2xl p-4 text-center cursor-pointer transition-colors bg-stone-50 hover:bg-amber-50/40"
-            >
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                capture="environment"
-                onChange={handleFileUpload}
-                className="hidden"
-              />
-              <div className="flex flex-col items-center justify-center gap-1.5">
-                <UploadCloud className="w-8 h-8 text-amber-600" />
-                <span className="text-xs font-semibold text-stone-800">
-                  Tap to Open Camera or Photo Gallery
-                </span>
-                <span className="text-[11px] text-stone-500">
-                  Supports JPG, PNG, WEBP (Auto-optimized)
-                </span>
+          {/* Direct Link to Professional Admin Dashboard */}
+          <div className="bg-[#0F2C59]/10 border border-[#0F2C59]/20 rounded-2xl p-3.5 flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2">
+              <Lock className="w-4 h-4 text-[#0F2C59]" />
+              <div className="text-xs">
+                <span className="font-bold text-[#0F2C59] block">Full Backoffice Available</span>
+                <span className="text-stone-600">Manage inquiries, home &amp; about content</span>
               </div>
             </div>
+            <Link
+              href="/admin"
+              onClick={onClose}
+              className="inline-flex items-center gap-1 bg-[#0F2C59] text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow-xs hover:bg-[#12366e] transition-colors"
+            >
+              <span>Open Admin</span>
+              <ExternalLink className="w-3 h-3 text-[#E5A93C]" />
+            </Link>
+          </div>
 
-            {/* Or Image URL */}
-            <div className="mt-2 flex items-center gap-2">
-              <span className="text-stone-400 text-xs shrink-0">or enter image link:</span>
-              <input
-                type="url"
-                placeholder="https://images.unsplash.com/..."
-                value={photoUrl.startsWith('data:') ? '' : photoUrl}
-                onChange={handleUrlChange}
-                className="w-full text-xs bg-stone-50 border border-stone-300 rounded-lg px-2.5 py-1.5 text-stone-700 focus:outline-hidden focus:ring-1 focus:ring-amber-500"
-              />
-            </div>
+          {/* Image URL Input */}
+          <div>
+            <label className="text-xs font-bold text-stone-700 block mb-1">
+              1. Image URL (Direct Cloud/CDN Image Link)
+            </label>
+            <input
+              type="url"
+              placeholder="https://images.unsplash.com/..."
+              value={photoUrl}
+              onChange={handleUrlChange}
+              className="w-full text-xs bg-stone-50 border border-stone-300 rounded-xl px-3 py-2.5 text-stone-800 focus:outline-hidden focus:ring-1 focus:ring-[#0F2C59]"
+              required
+            />
           </div>
 
           {/* Image Preview Box */}
@@ -220,6 +191,7 @@ export default function StaffAdminModal({
                 fill
                 sizes="(max-width: 600px) 100vw, 600px"
                 className="object-cover"
+                unoptimized
               />
               <span className="absolute bottom-2 right-2 bg-stone-900/80 text-white text-[10px] px-2 py-0.5 rounded-md">
                 Live Preview
@@ -250,27 +222,27 @@ export default function StaffAdminModal({
                 type="button"
                 onClick={() =>
                   handleQuickPreset(
-                    'Happy Family Check-in Welcome',
-                    'Warm hospitality greeting with traditional welcome drink.',
+                    'Fresh Coastal Seafood & Bengali Dining',
+                    'Daily fresh catch Bhetki Paturi & authentic Bengali lunch platter.',
                     'Daily Guest Moments'
                   )
                 }
-                className="text-[11px] bg-blue-50 text-blue-800 border border-blue-200 px-2 py-1 rounded-lg hover:bg-blue-100 cursor-pointer"
+                className="text-[11px] bg-amber-50 text-amber-900 border border-amber-200 px-2 py-1 rounded-lg hover:bg-amber-100 cursor-pointer"
               >
-                👨‍👩‍👧 Family Check-in
+                🍲 Bengali Seafood Feast
               </button>
               <button
                 type="button"
                 onClick={() =>
                   handleQuickPreset(
-                    'Freshly Sanitized Executive Balcony Suite',
-                    'Cleaned and prepared according to highest hygiene standards.',
-                    'Room Views'
+                    'Sunny Morning Stroll to Calangute Beach',
+                    '5 minutes walk from hotel gate directly to the golden sand shoreline.',
+                    'Goa Vibe'
                   )
                 }
-                className="text-[11px] bg-emerald-50 text-emerald-800 border border-emerald-200 px-2 py-1 rounded-lg hover:bg-emerald-100 cursor-pointer"
+                className="text-[11px] bg-sky-50 text-sky-800 border border-sky-200 px-2 py-1 rounded-lg hover:bg-sky-100 cursor-pointer"
               >
-                ✨ Sanitized Room
+                🌊 Calangute Beach 450m
               </button>
             </div>
           </div>
@@ -278,14 +250,14 @@ export default function StaffAdminModal({
           {/* Title */}
           <div>
             <label className="text-xs font-bold text-stone-700 block mb-1">
-              2. Photo Title / Setup Name
+              2. Photo Title *
             </label>
             <input
               type="text"
-              placeholder="e.g. Special Candlelight & Bed Decoration for Mr. & Mrs. Sharma"
+              placeholder="e.g. Honeymoon Candlelight Swan Bed Art"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full bg-stone-50 border border-stone-300 rounded-xl px-3 py-2 text-xs sm:text-sm text-stone-800 focus:outline-hidden focus:ring-2 focus:ring-amber-500 font-medium"
+              className="w-full bg-stone-50 border border-stone-300 rounded-xl px-3 py-2 text-xs sm:text-sm text-stone-800 focus:outline-hidden focus:ring-1 focus:ring-[#0F2C59]"
               required
             />
           </div>
@@ -293,7 +265,7 @@ export default function StaffAdminModal({
           {/* Tag Selector */}
           <div>
             <label className="text-xs font-bold text-stone-700 block mb-1.5">
-              3. Category Tag
+              3. Category
             </label>
             <div className="grid grid-cols-2 gap-2">
               {(
@@ -310,7 +282,7 @@ export default function StaffAdminModal({
                   onClick={() => setTag(t)}
                   className={`text-xs py-2 px-3 rounded-xl border text-left font-medium transition-colors cursor-pointer ${
                     tag === t
-                      ? 'bg-amber-600 text-white border-amber-600 shadow-2xs'
+                      ? 'bg-[#0F2C59] text-white border-[#0F2C59] shadow-2xs'
                       : 'bg-stone-50 hover:bg-stone-100 text-stone-700 border-stone-200'
                   }`}
                 >
@@ -330,7 +302,7 @@ export default function StaffAdminModal({
               placeholder="e.g. Prepared with fresh red roses, scented candles, and celebratory sparkling juice."
               value={caption}
               onChange={(e) => setCaption(e.target.value)}
-              className="w-full bg-stone-50 border border-stone-300 rounded-xl px-3 py-2 text-xs sm:text-sm text-stone-800 focus:outline-hidden focus:ring-2 focus:ring-amber-500"
+              className="w-full bg-stone-50 border border-stone-300 rounded-xl px-3 py-2 text-xs sm:text-sm text-stone-800 focus:outline-hidden focus:ring-1 focus:ring-[#0F2C59]"
             />
           </div>
 
@@ -339,13 +311,13 @@ export default function StaffAdminModal({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full flex items-center justify-center gap-2 bg-stone-900 hover:bg-black text-amber-400 font-medium py-3.5 px-4 rounded-xl shadow-xs transition-colors cursor-pointer disabled:opacity-50"
+              className="w-full flex items-center justify-center gap-2 bg-[#0F2C59] hover:bg-[#12366e] text-white font-medium py-3 px-4 rounded-xl shadow-xs transition-colors cursor-pointer disabled:opacity-50"
             >
               {isSubmitting ? (
-                <span>Publishing to Website...</span>
+                <span>Publishing to MongoDB...</span>
               ) : (
                 <>
-                  <Camera className="w-4 h-4" />
+                  <Camera className="w-4 h-4 text-[#E5A93C]" />
                   <span>Publish 1-Click to Goa Moments</span>
                   <ArrowRight className="w-4 h-4" />
                 </>
@@ -357,4 +329,3 @@ export default function StaffAdminModal({
     </div>
   );
 }
-

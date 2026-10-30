@@ -10,8 +10,10 @@ import {
   Star,
   Heart,
   Camera,
+  Lock,
 } from 'lucide-react';
 import BrandLogo from './BrandLogo';
+import WhatsAppIcon from './WhatsAppIcon';
 import {
   HOTEL_PHONE_DISPLAY,
   HOTEL_ADDRESS,
@@ -125,12 +127,12 @@ export default function Footer({ onOpenStaffModal, onOpenInquiryModal }: FooterP
                 </a>
               </li>
               <li className="flex items-center gap-2.5">
-                <MessageCircle className="w-4 h-4 text-[#FF6B6B] shrink-0 fill-[#FF6B6B]" />
+                <WhatsAppIcon className="w-4 h-4 fill-[#25D366] shrink-0" />
                 <a
                   href={buildWhatsAppUrl({ source: 'footer' })}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:underline text-[#FF6B6B] font-bold"
+                  className="hover:underline text-[#25D366] font-bold"
                 >
                   24/7 WhatsApp Concierge Desk
                 </a>
@@ -191,18 +193,16 @@ export default function Footer({ onOpenStaffModal, onOpenInquiryModal }: FooterP
               </span>
             </div>
 
-            {onOpenStaffModal && (
-              <div className="pt-3 border-t border-blue-900 flex items-center justify-between">
-                <span className="text-xs text-stone-400 font-medium">Hotel Staff:</span>
-                <button
-                  onClick={onOpenStaffModal}
-                  className="flex items-center gap-1.5 text-xs text-[#E5A93C] hover:text-amber-300 bg-[#0F2C59] hover:bg-[#12366e] px-3 py-1.5 rounded-lg border border-blue-800 transition-colors cursor-pointer font-bold"
-                >
-                  <Camera className="w-3.5 h-3.5" />
-                  <span>Staff 1-Click Upload</span>
-                </button>
-              </div>
-            )}
+            <div className="pt-3 border-t border-blue-900 flex items-center justify-between">
+              <span className="text-xs text-stone-400 font-medium">Hotel Management:</span>
+              <Link
+                href="/admin"
+                className="flex items-center gap-1.5 text-xs text-[#E5A93C] hover:text-amber-300 bg-[#0F2C59] hover:bg-[#12366e] px-3 py-1.5 rounded-lg border border-blue-800 transition-colors font-bold"
+              >
+                <Lock className="w-3.5 h-3.5" />
+                <span>Admin &amp; Staff Portal</span>
+              </Link>
+            </div>
           </div>
         </div>
 

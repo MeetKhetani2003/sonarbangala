@@ -7,6 +7,7 @@ import Footer from '@/components/Footer';
 import StickyMobileBar from '@/components/StickyMobileBar';
 import InquiryModal from '@/components/InquiryModal';
 import StaffAdminModal from '@/components/StaffAdminModal';
+import PageHeaderBanner from '@/components/PageHeaderBanner';
 import {
   MapPin,
   Phone,
@@ -18,7 +19,9 @@ import {
   ShieldCheck,
   Send,
   Navigation,
+  Loader2,
 } from 'lucide-react';
+import WhatsAppIcon from '@/components/WhatsAppIcon';
 import {
   HOTEL_PHONE_DISPLAY,
   HOTEL_ADDRESS,
@@ -42,10 +45,13 @@ export default function ContactPage() {
   const [roomType, setRoomType] = useState('Couple / Duo Executive Room');
   const [message, setMessage] = useState('');
   const [romanticDecor, setRomanticDecor] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const url = buildWhatsAppUrl({
+    setIsSubmitting(true);
+
+    const fallbackUrl = buildWhatsAppUrl({
       roomType,
       checkIn,
       checkOut,
@@ -54,7 +60,32 @@ export default function ContactPage() {
       }`,
       source: 'contact_page_form',
     });
-    window.open(url, '_blank', 'noopener,noreferrer');
+
+    try {
+      const res = await fetch('/api/inquiries', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: name || 'Guest',
+          phone: phone || 'Not provided',
+          roomType,
+          checkIn,
+          checkOut,
+          specialRequest: message,
+          romanticDecor,
+          source: 'contact_page_form',
+        }),
+      });
+
+      const data = await res.json();
+      const targetUrl = data.whatsappUrl || fallbackUrl;
+      window.open(targetUrl, '_blank', 'noopener,noreferrer');
+    } catch (err) {
+      console.warn('API submission failed, launching WhatsApp directly', err);
+      window.open(fallbackUrl, '_blank', 'noopener,noreferrer');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -64,29 +95,43 @@ export default function ContactPage() {
         onOpenStaffModal={() => setIsStaffModalOpen(true)}
       />
 
-      {/* Hero Banner (Luxury Blue #0F2C59) */}
-      <section className="relative bg-[#0F2C59] text-white py-16 sm:py-24 overflow-hidden border-b border-blue-950">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <div className="flex items-center justify-center gap-2 text-xs text-stone-300 mb-4 font-medium">
-            <Link href="/" className="hover:text-[#E5A93C] transition-colors">Home</Link>
-            <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
-            <span className="text-[#E5A93C]">Contact &amp; Reservations</span>
-          </div>
-
-          <span className="inline-flex items-center gap-1.5 text-xs text-[#E5A93C] bg-[#0A1E3D] border border-blue-800 px-3 py-1 rounded-full font-bold mb-3">
-            <Phone className="w-3.5 h-3.5 text-[#E5A93C]" />
-            Direct Concierge Desk
-          </span>
-
-          <h1 className="font-serif text-3xl sm:text-5xl font-semibold tracking-tight text-white mb-4">
-            Contact &amp; Direct Inquiry
-          </h1>
-
-          <p className="max-w-2xl mx-auto text-sm sm:text-base text-stone-200 font-normal leading-relaxed">
-            Reach out directly for room availability, honeymoon arrangements, scooter bookings, or customized Bengali dining requests.
-          </p>
-        </div>
-      </section>
+      {/* Rich Atmospheric Page Hero Banner */}
+      <PageHeaderBanner
+        breadcrumbLabel="Contact & Direct Inquiry"
+        badgeText="Direct Concierge Desk · Calangute Beach"
+        badgeIcon={<Phone className="w-3.5 h-3.5 text-[#E5A93C]" />}
+        title="We Are Here to Welcome You to Goa"
+        subtitle="Reach out directly to our 24/7 reception desk for priority reservations, customized romantic setups, and scooter or taxi assistance."
+        backgroundImage="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1920&q=85"
+        highlights={[
+          { icon: <Sparkles className="w-3.5 h-3.5 text-emerald-400" />, label: 'Replies in < 2 Mins on WhatsApp' },
+          { icon: <ShieldCheck className="w-3.5 h-3.5 text-[#E5A93C]" />, label: 'Direct Desk Rate Guarantee' },
+          { icon: <MapPin className="w-3.5 h-3.5 text-emerald-400" />, label: 'Calangute Beach 450m' },
+        ]}
+        actions={
+          <>
+            <a
+              href={buildWhatsAppUrl({
+                specialRequest: 'General inquiry or room booking reservation request',
+                source: 'contact_hero',
+              })}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-[#FF6B6B] hover:bg-[#fa5b5b] text-white font-bold text-xs sm:text-sm px-6 py-3.5 rounded-full shadow-lg transition-transform active:scale-98"
+            >
+              <MessageCircle className="w-4 h-4 fill-white text-[#FF6B6B]" />
+              <span>Direct WhatsApp Desk</span>
+            </a>
+            <a
+              href={buildCallUrl()}
+              className="inline-flex items-center gap-2 bg-white/15 hover:bg-white/25 backdrop-blur-md text-white font-bold text-xs sm:text-sm px-5 py-3.5 rounded-full border border-white/20 transition-all"
+            >
+              <Phone className="w-4 h-4 text-[#E5A93C]" />
+              <span>Call Reception ({HOTEL_PHONE_DISPLAY})</span>
+            </a>
+          </>
+        }
+      />
 
       {/* Main Contact Grid */}
       <section className="py-16 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex-1">
@@ -292,10 +337,15 @@ export default function ContactPage() {
 
               <button
                 type="submit"
-                className="w-full flex items-center justify-center gap-2 bg-[#FF6B6B] hover:bg-[#fa5b5b] text-white font-bold py-3.5 px-4 rounded-xl shadow-xs transition-transform active:scale-98 text-xs sm:text-sm cursor-pointer"
+                disabled={isSubmitting}
+                className="w-full flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20ba59] text-white font-bold py-3.5 px-4 rounded-xl shadow-md transition-all active:scale-98 text-xs sm:text-sm cursor-pointer disabled:opacity-75"
               >
-                <MessageCircle className="w-4 h-4 fill-white text-[#FF6B6B]" />
-                <span>Submit Inquiry &amp; Send to WhatsApp</span>
+                {isSubmitting ? (
+                  <Loader2 className="w-4 h-4 animate-spin text-white" />
+                ) : (
+                  <WhatsAppIcon className="w-4 h-4 fill-white" />
+                )}
+                <span>{isSubmitting ? 'Sending to Desk...' : 'Submit Inquiry & Open WhatsApp'}</span>
               </button>
             </form>
           </div>

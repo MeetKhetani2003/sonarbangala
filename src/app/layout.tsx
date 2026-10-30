@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Playfair_Display, Outfit } from "next/font/google";
 import "./globals.css";
 import JsonLd from "@/components/JsonLd";
+import FloatingWhatsAppButton from "@/components/FloatingWhatsAppButton";
 
 const playfair = Playfair_Display({
   variable: "--font-serif",
@@ -43,6 +44,10 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://hotelsonarbanglagoa.com"),
   alternates: {
     canonical: "/",
+  },
+  icons: {
+    icon: "/images/logo-icon.png",
+    apple: "/images/logo-icon.png",
   },
   openGraph: {
     title: "Hotel Sonar Bangla Goa | Couple & Family Stay Near Beach",
@@ -96,6 +101,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen flex flex-col bg-[#FAFAFA] text-stone-900 font-sans selection:bg-[#FF6B6B]/20 selection:text-[#0F2C59]">
         {children}
+        <FloatingWhatsAppButton />
       </body>
     </html>
   );

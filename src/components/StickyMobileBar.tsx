@@ -1,6 +1,7 @@
 'use client';
 
-import { Phone, MessageCircle, MapPin } from 'lucide-react';
+import { Phone, MapPin } from 'lucide-react';
+import WhatsAppIcon from './WhatsAppIcon';
 import { buildCallUrl, buildWhatsAppUrl, GOOGLE_MAPS_LINK } from '@/lib/whatsapp';
 
 export default function StickyMobileBar() {
@@ -20,16 +21,16 @@ export default function StickyMobileBar() {
           <span className="text-[11px] font-semibold tracking-tight">Call Reception</span>
         </a>
 
-        {/* 2. WhatsApp Inquiry (Highlighted Button in Sunset Coral #FF6B6B) */}
+        {/* 2. WhatsApp Inquiry (Highlighted Official WhatsApp Green) */}
         <a
           href={buildWhatsAppUrl({ source: 'sticky_bottom_bar' })}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex flex-col items-center justify-center py-2 px-1 rounded-xl bg-[#FF6B6B] active:bg-[#fa5b5b] text-white shadow-sm transition-transform active:scale-98"
+          className="flex flex-col items-center justify-center py-2 px-1 rounded-xl bg-[#25D366] active:bg-[#20ba59] text-white shadow-md transition-transform active:scale-98"
           aria-label="Inquire on WhatsApp with Hotel Concierge"
         >
           <div className="flex items-center gap-1 mb-0.5">
-            <MessageCircle className="w-4 h-4 fill-white text-[#FF6B6B]" />
+            <WhatsAppIcon className="w-4 h-4 fill-white" />
             <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
           </div>
           <span className="text-[11px] font-bold tracking-tight">WhatsApp Inquiry</span>

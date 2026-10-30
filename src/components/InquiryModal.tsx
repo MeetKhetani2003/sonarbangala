@@ -4,12 +4,12 @@ import { useState } from 'react';
 import {
   X,
   CalendarCheck,
-  MessageCircle,
   Phone,
   Sparkles,
   ShieldCheck,
-  CheckCircle2,
+  Loader2,
 } from 'lucide-react';
+import WhatsAppIcon from './WhatsAppIcon';
 import { buildWhatsAppUrl, buildCallUrl, HOTEL_PHONE_DISPLAY } from '@/lib/whatsapp';
 
 interface InquiryModalProps {
@@ -27,23 +27,55 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
   const [guests, setGuests] = useState('2 Adults (Couple)');
   const [romanticDecor, setRomanticDecor] = useState(true);
   const [guestName, setGuestName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const url = buildWhatsAppUrl({
+    setIsSubmitting(true);
+
+    const fallbackUrl = buildWhatsAppUrl({
       roomType,
       checkIn,
       checkOut,
       guests,
       specialRequest: romanticDecor
-        ? `Guest Name: ${guestName || 'Guest'} · Please include Romantic/Honeymoon Bed Decoration details`
-        : `Guest Name: ${guestName || 'Guest'}`,
+        ? `Guest Name: ${guestName || 'Guest'} · Contact: ${phone || 'Direct'} · Please include Romantic/Honeymoon Bed Decoration details`
+        : `Guest Name: ${guestName || 'Guest'} · Contact: ${phone || 'Direct'}`,
       source: 'check_availability_modal',
     });
-    window.open(url, '_blank', 'noopener,noreferrer');
-    onClose();
+
+    try {
+      const res = await fetch('/api/inquiries', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: guestName || 'Guest',
+          phone: phone || 'Not provided',
+          roomType,
+          checkIn,
+          checkOut,
+          guests,
+          romanticDecor,
+          specialRequest: romanticDecor
+            ? 'Guest requested Romantic / Honeymoon Bed Decoration with fresh rose petals & candlelight'
+            : '',
+          source: 'check_availability_modal',
+        }),
+      });
+
+      const data = await res.json();
+      const targetUrl = data.whatsappUrl || fallbackUrl;
+      window.open(targetUrl, '_blank', 'noopener,noreferrer');
+    } catch (err) {
+      console.warn('API submission failed, launching WhatsApp directly', err);
+      window.open(fallbackUrl, '_blank', 'noopener,noreferrer');
+    } finally {
+      setIsSubmitting(false);
+      onClose();
+    }
   };
 
   return (
@@ -58,7 +90,7 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
                 Check Room Availability
               </h3>
               <p className="text-xs text-stone-200 font-normal">
-                Direct WhatsApp Concierge · Zero Booking Fees
+                Direct Desk Guarantee · Inquiry Sent to Client &amp; WhatsApp
               </p>
             </div>
           </div>
@@ -75,22 +107,36 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
           <div className="bg-emerald-50 rounded-xl p-3 border border-emerald-200/80 flex items-center gap-2 text-xs text-emerald-800">
             <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
             <span>
-              <strong>100% Couple Friendly Guarantee:</strong> Instant WhatsApp confirmation directly from the property desk.
+              <strong>100% Couple Friendly Guarantee:</strong> Instant response &amp; zero hidden taxes via direct concierge booking.
             </span>
           </div>
 
-          {/* Guest Name */}
-          <div>
-            <label className="text-xs font-bold text-stone-700 block mb-1">
-              Your Name (Optional)
-            </label>
-            <input
-              type="text"
-              placeholder="e.g. Rahul Sharma"
-              value={guestName}
-              onChange={(e) => setGuestName(e.target.value)}
-              className="w-full bg-stone-50 border border-stone-300 rounded-xl px-3 py-2 text-xs sm:text-sm text-stone-800 focus:outline-hidden focus:ring-2 focus:ring-amber-500 font-medium"
-            />
+          {/* Guest Name & Phone */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label className="text-xs font-bold text-stone-700 block mb-1">
+                Your Name
+              </label>
+              <input
+                type="text"
+                placeholder="e.g. Rahul Sharma"
+                value={guestName}
+                onChange={(e) => setGuestName(e.target.value)}
+                className="w-full bg-stone-50 border border-stone-300 rounded-xl px-3 py-2 text-xs sm:text-sm text-stone-800 focus:outline-hidden focus:ring-2 focus:ring-[#0F2C59] font-medium"
+              />
+            </div>
+            <div>
+              <label className="text-xs font-bold text-stone-700 block mb-1">
+                WhatsApp / Phone (Optional)
+              </label>
+              <input
+                type="tel"
+                placeholder="+91 98765 43210"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                className="w-full bg-stone-50 border border-stone-300 rounded-xl px-3 py-2 text-xs sm:text-sm text-stone-800 focus:outline-hidden focus:ring-2 focus:ring-[#0F2C59] font-medium"
+              />
+            </div>
           </div>
 
           {/* Dates */}
@@ -104,7 +150,7 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
                 min={today}
                 value={checkIn}
                 onChange={(e) => setCheckIn(e.target.value)}
-                className="w-full bg-stone-50 border border-stone-300 rounded-xl px-3 py-2 text-xs sm:text-sm text-stone-800 focus:outline-hidden focus:ring-2 focus:ring-amber-500 font-medium"
+                className="w-full bg-stone-50 border border-stone-300 rounded-xl px-3 py-2 text-xs sm:text-sm text-stone-800 focus:outline-hidden focus:ring-2 focus:ring-[#0F2C59] font-medium"
                 required
               />
             </div>
@@ -117,7 +163,7 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
                 min={checkIn || today}
                 value={checkOut}
                 onChange={(e) => setCheckOut(e.target.value)}
-                className="w-full bg-stone-50 border border-stone-300 rounded-xl px-3 py-2 text-xs sm:text-sm text-stone-800 focus:outline-hidden focus:ring-2 focus:ring-amber-500 font-medium"
+                className="w-full bg-stone-50 border border-stone-300 rounded-xl px-3 py-2 text-xs sm:text-sm text-stone-800 focus:outline-hidden focus:ring-2 focus:ring-[#0F2C59] font-medium"
                 required
               />
             </div>
@@ -131,7 +177,7 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
             <select
               value={roomType}
               onChange={(e) => setRoomType(e.target.value)}
-              className="w-full bg-stone-50 border border-stone-300 rounded-xl px-3 py-2 text-xs sm:text-sm text-stone-800 focus:outline-hidden focus:ring-2 focus:ring-amber-500 font-medium cursor-pointer"
+              className="w-full bg-stone-50 border border-stone-300 rounded-xl px-3 py-2 text-xs sm:text-sm text-stone-800 focus:outline-hidden focus:ring-2 focus:ring-[#0F2C59] font-medium cursor-pointer"
             >
               <option value="Couple / Duo Executive Room">Couple / Duo Executive Room (Romantic Balcony)</option>
               <option value="Family & Group Premium Suite">Family & Group Premium Suite (Spacious 4-6)</option>
@@ -147,7 +193,7 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
             <select
               value={guests}
               onChange={(e) => setGuests(e.target.value)}
-              className="w-full bg-stone-50 border border-stone-300 rounded-xl px-3 py-2 text-xs sm:text-sm text-stone-800 focus:outline-hidden focus:ring-2 focus:ring-amber-500 font-medium cursor-pointer"
+              className="w-full bg-stone-50 border border-stone-300 rounded-xl px-3 py-2 text-xs sm:text-sm text-stone-800 focus:outline-hidden focus:ring-2 focus:ring-[#0F2C59] font-medium cursor-pointer"
             >
               <option value="2 Adults (Couple)">2 Adults (Couple)</option>
               <option value="1 Adult">1 Adult</option>
@@ -164,7 +210,7 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
                 type="checkbox"
                 checked={romanticDecor}
                 onChange={(e) => setRomanticDecor(e.target.checked)}
-                className="rounded text-amber-600 focus:ring-amber-500 w-4 h-4 cursor-pointer"
+                className="rounded text-[#0F2C59] focus:ring-[#0F2C59] w-4 h-4 cursor-pointer"
               />
               <span className="flex items-center gap-1 font-medium text-amber-900">
                 <Sparkles className="w-3.5 h-3.5 text-amber-600" />
@@ -177,10 +223,15 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
           <div className="pt-3 space-y-2.5">
             <button
               type="submit"
-              className="w-full flex items-center justify-center gap-2 bg-[#FF6B6B] hover:bg-[#fa5b5b] text-white font-bold py-3 px-4 rounded-xl shadow-xs transition-transform active:scale-98 cursor-pointer text-sm"
+              disabled={isSubmitting}
+              className="w-full flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20ba59] text-white font-bold py-3 px-4 rounded-xl shadow-md transition-all active:scale-98 cursor-pointer text-sm disabled:opacity-75"
             >
-              <MessageCircle className="w-4 h-4 fill-white text-[#FF6B6B]" />
-              <span>Inquire Best Rates on WhatsApp</span>
+              {isSubmitting ? (
+                <Loader2 className="w-4 h-4 animate-spin text-white" />
+              ) : (
+                <WhatsAppIcon className="w-4 h-4 fill-white" />
+              )}
+              <span>{isSubmitting ? 'Sending to Desk...' : 'Inquire on WhatsApp'}</span>
             </button>
 
             <a
@@ -196,4 +247,3 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
     </div>
   );
 }
-

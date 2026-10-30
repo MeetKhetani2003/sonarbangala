@@ -8,6 +8,7 @@ import Footer from '@/components/Footer';
 import StickyMobileBar from '@/components/StickyMobileBar';
 import InquiryModal from '@/components/InquiryModal';
 import StaffAdminModal from '@/components/StaffAdminModal';
+import PageHeaderBanner from '@/components/PageHeaderBanner';
 import {
   Heart,
   Sparkles,
@@ -22,6 +23,7 @@ import {
   Flame,
 } from 'lucide-react';
 import { buildWhatsAppUrl, buildCallUrl, HOTEL_PHONE_DISPLAY } from '@/lib/whatsapp';
+import WhatsAppIcon from '@/components/WhatsAppIcon';
 
 export default function HoneymoonSpecialPage() {
   const [isInquiryModalOpen, setIsInquiryModalOpen] = useState(false);
@@ -77,43 +79,44 @@ export default function HoneymoonSpecialPage() {
         onOpenStaffModal={() => setIsStaffModalOpen(true)}
       />
 
-      {/* Hero Banner (Luxury Blue #0F2C59) */}
-      <section className="relative bg-[#0F2C59] text-white py-16 sm:py-24 overflow-hidden border-b border-blue-950">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <div className="flex items-center justify-center gap-2 text-xs text-stone-300 mb-4 font-medium">
-            <Link href="/" className="hover:text-[#E5A93C] transition-colors">Home</Link>
-            <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
-            <span className="text-[#E5A93C]">Honeymoon &amp; Romantic Stays</span>
-          </div>
-
-          <span className="inline-flex items-center gap-1.5 text-xs text-[#E5A93C] bg-[#0A1E3D] border border-blue-800 px-3 py-1 rounded-full font-bold mb-3">
-            <Heart className="w-3.5 h-3.5 fill-[#FF6B6B] text-[#FF6B6B]" />
-            Goa Romance &amp; Celebrations
-          </span>
-
-          <h1 className="font-serif text-3xl sm:text-5xl font-semibold tracking-tight text-white mb-4">
-            Celebrate Love on Goa&apos;s Golden Coast
-          </h1>
-
-          <p className="max-w-2xl mx-auto text-sm sm:text-base text-stone-200 font-normal leading-relaxed mb-8">
-            An intimate sanctuary for couples and newlyweds. Enjoy discreet hospitality, private balconies, and handcrafted romantic setups arranged seamlessly before your arrival.
-          </p>
-
-          <div className="flex flex-wrap items-center justify-center gap-3">
+      {/* Rich Atmospheric Page Hero Banner */}
+      <PageHeaderBanner
+        breadcrumbLabel="Honeymoon & Romantic Packages"
+        badgeText="Curated Romance & Celebrations"
+        badgeIcon={<Heart className="w-3.5 h-3.5 fill-[#FF6B6B] text-[#FF6B6B]" />}
+        title="Celebrate Love on Goa's Golden Coast"
+        subtitle="An intimate sanctuary for couples and newlyweds. Enjoy discreet hospitality, private balconies, and handcrafted romantic setups arranged seamlessly before your arrival."
+        backgroundImage="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=1920&q=85"
+        highlights={[
+          { icon: <Heart className="w-3.5 h-3.5 text-[#FF6B6B] fill-[#FF6B6B]" />, label: 'Fresh Rose Petal Calligraphy' },
+          { icon: <Sparkles className="w-3.5 h-3.5 text-[#E5A93C]" />, label: 'Ambient Candlelight & Fairy Lights' },
+          { icon: <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />, label: '100% Couple Friendly & Discreet' },
+          { icon: <Gift className="w-3.5 h-3.5 text-[#E5A93C]" />, label: 'Celebration Cakes on Demand' },
+        ]}
+        actions={
+          <>
             <a
               href={buildWhatsAppUrl({
                 specialRequest: 'Inquiring about Honeymoon Package & Bed Decoration options',
+                source: 'honeymoon_hero',
               })}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-[#FF6B6B] hover:bg-[#fa5b5b] text-white font-bold text-xs sm:text-sm px-6 py-3.5 rounded-full shadow-xs transition-transform active:scale-98"
+              className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#20ba59] text-white font-bold text-xs sm:text-sm px-6 py-3.5 rounded-full shadow-lg transition-transform active:scale-98"
             >
-              <MessageCircle className="w-4 h-4 fill-white text-[#FF6B6B]" />
+              <WhatsAppIcon className="w-4 h-4 fill-white" />
               <span>Inquire Honeymoon Setups on WhatsApp</span>
             </a>
-          </div>
-        </div>
-      </section>
+            <button
+              onClick={() => setIsInquiryModalOpen(true)}
+              className="inline-flex items-center gap-2 bg-white/15 hover:bg-white/25 backdrop-blur-md text-white font-bold text-xs sm:text-sm px-5 py-3.5 rounded-full border border-white/20 transition-all cursor-pointer"
+            >
+              <Sparkles className="w-4 h-4 text-[#E5A93C]" />
+              <span>Request Custom Surprise</span>
+            </button>
+          </>
+        }
+      />
 
       {/* Package Showcase */}
       <section className="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex-1">

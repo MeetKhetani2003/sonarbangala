@@ -8,14 +8,17 @@ import StickyMobileBar from '@/components/StickyMobileBar';
 import InquiryModal from '@/components/InquiryModal';
 import StaffAdminModal from '@/components/StaffAdminModal';
 import ReviewsSection from '@/components/ReviewsSection';
+import PageHeaderBanner from '@/components/PageHeaderBanner';
 import {
   Star,
   ChevronRight,
   ShieldCheck,
   Award,
   ExternalLink,
+  MessageCircle,
 } from 'lucide-react';
-import { GOOGLE_MAPS_LINK } from '@/lib/whatsapp';
+import { GOOGLE_MAPS_LINK, buildWhatsAppUrl } from '@/lib/whatsapp';
+import WhatsAppIcon from '@/components/WhatsAppIcon';
 
 export default function ReviewsPage() {
   const [isInquiryModalOpen, setIsInquiryModalOpen] = useState(false);
@@ -28,39 +31,45 @@ export default function ReviewsPage() {
         onOpenStaffModal={() => setIsStaffModalOpen(true)}
       />
 
-      {/* Banner (Luxury Blue #0F2C59) */}
-      <section className="relative bg-[#0F2C59] text-white py-16 sm:py-24 overflow-hidden border-b border-blue-950">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <div className="flex items-center justify-center gap-2 text-xs text-stone-300 mb-4 font-medium">
-            <Link href="/" className="hover:text-[#E5A93C] transition-colors">Home</Link>
-            <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
-            <span className="text-[#E5A93C]">Google Reviews &amp; Social Proof</span>
-          </div>
-
-          <span className="inline-flex items-center gap-1.5 text-xs text-[#E5A93C] bg-[#0A1E3D] border border-blue-800 px-3 py-1 rounded-full font-bold mb-3">
-            <Star className="w-3.5 h-3.5 fill-[#E5A93C] text-[#E5A93C]" />
-            ★ 4.5+ Rating on Google Maps (Verified Reviews)
-          </span>
-
-          <h1 className="font-serif text-3xl sm:text-5xl font-semibold tracking-tight text-white mb-4">
-            Words of Warmth from Our Guests
-          </h1>
-
-          <p className="max-w-2xl mx-auto text-sm sm:text-base text-stone-200 font-normal leading-relaxed mb-6">
-            Read candid memories and feedback shared by honeymoon couples, holidaying families, and travelers from Kolkata, Mumbai, Delhi, and beyond.
-          </p>
-
-          <a
-            href={GOOGLE_MAPS_LINK}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-[#0A1E3D] hover:bg-[#0c2347] text-[#E5A93C] text-xs sm:text-sm font-bold px-5 py-2.5 rounded-full border border-blue-800 transition-all"
-          >
-            <span>Read All Google Maps Verified Reviews</span>
-            <ExternalLink className="w-3.5 h-3.5" />
-          </a>
-        </div>
-      </section>
+      {/* Atmospheric Page Hero Banner */}
+      <PageHeaderBanner
+        breadcrumbLabel="Google Reviews & Social Proof"
+        badgeText="★ 4.5+ Rating on Google Maps (Verified Reviews)"
+        badgeIcon={<Star className="w-3.5 h-3.5 fill-[#E5A93C] text-[#E5A93C]" />}
+        title="Words of Warmth from Our Guests"
+        subtitle="Read candid memories and feedback shared by honeymoon couples, holidaying families, and travelers from Kolkata, Mumbai, Delhi, and beyond."
+        backgroundImage="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1920&q=85"
+        highlights={[
+          { icon: <Star className="w-3.5 h-3.5 fill-[#E5A93C] text-[#E5A93C]" />, label: '4.5 / 5.0 Google Rating' },
+          { icon: <Award className="w-3.5 h-3.5 text-[#E5A93C]" />, label: '128+ Verified Reviews' },
+          { icon: <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />, label: '100% Couple Friendly Verified' },
+        ]}
+        actions={
+          <>
+            <a
+              href={GOOGLE_MAPS_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-[#FF6B6B] hover:bg-[#fa5b5b] text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-full shadow-lg transition-transform active:scale-98"
+            >
+              <span>Read All Google Reviews</span>
+              <ExternalLink className="w-4 h-4 text-white" />
+            </a>
+            <a
+              href={buildWhatsAppUrl({
+                specialRequest: 'Sharing feedback or inquiring about guest experience',
+                source: 'reviews_hero',
+              })}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#20ba59] text-white font-bold text-xs sm:text-sm px-5 py-3 rounded-full shadow-lg transition-transform active:scale-98"
+            >
+              <WhatsAppIcon className="w-4 h-4 fill-white" />
+              <span>Share Experience on WhatsApp</span>
+            </a>
+          </>
+        }
+      />
 
       {/* Main Reviews Hub */}
       <div className="flex-1">

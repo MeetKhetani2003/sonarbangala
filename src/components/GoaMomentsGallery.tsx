@@ -16,6 +16,7 @@ import {
   Tag,
   Share2,
 } from 'lucide-react';
+import WhatsAppIcon from './WhatsAppIcon';
 import { GalleryPhoto } from '@/types/hotel';
 import { INITIAL_GALLERY_PHOTOS } from '@/data/hotelData';
 import { buildWhatsAppUrl } from '@/lib/whatsapp';
@@ -200,9 +201,9 @@ export default function GoaMomentsGallery({
 
                 {/* Hover Overlay with WhatsApp Inquiry Cue */}
                 <div className="absolute inset-0 bg-[#0F2C59]/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-4 text-center">
-                  <span className="bg-[#FF6B6B] text-white text-xs font-bold px-3.5 py-2 rounded-full flex items-center gap-1.5 shadow-lg transform -translate-y-2 group-hover:translate-y-0 transition-transform">
-                    <MessageCircle className="w-3.5 h-3.5 fill-white text-[#FF6B6B]" />
-                    Want a Similar Setup? Ask Us on WhatsApp
+                  <span className="bg-[#25D366] text-white text-xs font-bold px-3.5 py-2 rounded-full flex items-center gap-1.5 shadow-lg transform -translate-y-2 group-hover:translate-y-0 transition-transform">
+                    <WhatsAppIcon className="w-3.5 h-3.5 fill-white" />
+                    Want a Similar Setup? Ask on WhatsApp
                   </span>
                 </div>
               </div>
@@ -309,9 +310,9 @@ export default function GoaMomentsGallery({
                   })}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-[#FF6B6B] hover:bg-[#fa5b5b] text-white font-bold text-xs sm:text-sm px-5 py-3 rounded-xl shadow-xs transition-transform active:scale-98 cursor-pointer"
+                  className="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20ba59] text-white font-bold text-xs sm:text-sm px-5 py-3 rounded-xl shadow-md transition-transform active:scale-98 cursor-pointer"
                 >
-                  <MessageCircle className="w-4 h-4 fill-white text-[#FF6B6B]" />
+                  <WhatsAppIcon className="w-4 h-4 fill-white" />
                   <span>Want a Similar Setup? Ask Us on WhatsApp</span>
                 </a>
               </div>

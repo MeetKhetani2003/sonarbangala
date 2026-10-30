@@ -1,6 +1,6 @@
-export const HOTEL_PHONE = "+919830012345"; // Hotel Sonar Bangla Goa Direct Contact
-export const HOTEL_PHONE_DISPLAY = "+91 98300 12345";
-export const HOTEL_WHATSAPP = "919830012345"; // For wa.me link
+export const HOTEL_PHONE = "+919064022151"; // Hotel Sonar Bangla Goa Direct Contact
+export const HOTEL_PHONE_DISPLAY = "+91 90640 22151";
+export const HOTEL_WHATSAPP = "919064022151"; // For wa.me link
 export const HOTEL_EMAIL = "reservations.goa@sonarbangla.com";
 export const HOTEL_ADDRESS = "Calangute - Baga Road, Near Beach, North Goa, 403516, India";
 export const GOOGLE_MAPS_LINK = "https://maps.google.com/?q=Hotel+Sonar+Bangla+Calangute+Goa";

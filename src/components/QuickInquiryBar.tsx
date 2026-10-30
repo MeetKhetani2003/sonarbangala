@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { Calendar, Users, MessageCircle, CheckCircle2, ShieldCheck, Heart } from 'lucide-react';
+import { Calendar, Users, ShieldCheck, CheckCircle2, Heart, Loader2 } from 'lucide-react';
+import WhatsAppIcon from './WhatsAppIcon';
 import { buildWhatsAppUrl } from '@/lib/whatsapp';
 
 export default function QuickInquiryBar() {
@@ -13,10 +14,15 @@ export default function QuickInquiryBar() {
   const [roomType, setRoomType] = useState('Couple / Duo Executive Room');
   const [guests, setGuests] = useState('2 Adults (Couple)');
   const [romanticDecor, setRomanticDecor] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [notification, setNotification] = useState<string | null>(null);
 
-  const handleInquireWhatsApp = (e: React.FormEvent) => {
+  const handleInquireWhatsApp = async (e: React.FormEvent) => {
     e.preventDefault();
-    const url = buildWhatsAppUrl({
+    setIsSubmitting(true);
+    setNotification('Sending inquiry to concierge...');
+
+    const fallbackUrl = buildWhatsAppUrl({
       roomType,
       checkIn,
       checkOut,
@@ -26,7 +32,37 @@ export default function QuickInquiryBar() {
         : undefined,
       source: 'quick_inquiry_bar',
     });
-    window.open(url, '_blank', 'noopener,noreferrer');
+
+    try {
+      // 1. Send inquiry to backend -> saves in MongoDB & triggers email from user's gmail to client's mail
+      const res = await fetch('/api/inquiries', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          roomType,
+          checkIn,
+          checkOut,
+          guests,
+          romanticDecor,
+          specialRequest: romanticDecor
+            ? 'Honeymoon / Romantic Bed Decoration setup requested'
+            : '',
+          source: 'quick_inquiry_bar',
+        }),
+      });
+
+      const data = await res.json();
+      const targetUrl = data.whatsappUrl || fallbackUrl;
+
+      setNotification('Inquiry sent! Opening WhatsApp chat...');
+      window.open(targetUrl, '_blank', 'noopener,noreferrer');
+    } catch (err) {
+      console.warn('Direct inquiry API failed, falling back to direct WhatsApp link', err);
+      window.open(fallbackUrl, '_blank', 'noopener,noreferrer');
+    } finally {
+      setIsSubmitting(false);
+      setTimeout(() => setNotification(null), 4000);
+    }
   };
 
   return (
@@ -131,19 +167,24 @@ export default function QuickInquiryBar() {
           </select>
         </div>
 
-        {/* WhatsApp CTA Action (Sunset Coral #FF6B6B) */}
+        {/* Real WhatsApp CTA Action */}
         <div className="flex flex-col">
           <button
             type="submit"
-            className="w-full h-11 flex items-center justify-center gap-2 bg-[#FF6B6B] hover:bg-[#fa5b5b] text-white font-bold px-4 rounded-xl shadow-xs transition-transform active:scale-98 cursor-pointer text-xs sm:text-sm"
+            disabled={isSubmitting}
+            className="w-full h-11 flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20ba59] text-white font-bold px-4 rounded-xl shadow-md transition-all active:scale-98 cursor-pointer text-xs sm:text-sm disabled:opacity-75"
           >
-            <MessageCircle className="w-4 h-4 fill-white text-[#FF6B6B]" />
-            <span className="truncate">Inquire Best Rates</span>
+            {isSubmitting ? (
+              <Loader2 className="w-4 h-4 animate-spin text-white" />
+            ) : (
+              <WhatsAppIcon className="w-4 h-4 fill-white" />
+            )}
+            <span className="truncate">{isSubmitting ? 'Sending...' : 'Inquire on WhatsApp'}</span>
           </button>
         </div>
       </form>
 
-      {/* Romantic Honeymoon Decor Checkbox */}
+      {/* Romantic Honeymoon Decor Checkbox & Status */}
       <div className="mt-4 pt-3 border-t border-stone-100 flex flex-wrap items-center justify-between gap-2">
         <label className="flex items-center gap-2 cursor-pointer text-xs text-stone-700 select-none group font-medium">
           <input
@@ -159,7 +200,11 @@ export default function QuickInquiryBar() {
         </label>
 
         <span className="text-[11px] text-stone-500 font-normal">
-          ⚡ Direct desk replies in &lt; 2 minutes
+          {notification ? (
+            <span className="text-emerald-600 font-semibold">{notification}</span>
+          ) : (
+            '⚡ Direct desk replies in < 2 minutes'
+          )}
         </span>
       </div>
     </div>

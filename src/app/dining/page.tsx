@@ -8,6 +8,7 @@ import Footer from '@/components/Footer';
 import StickyMobileBar from '@/components/StickyMobileBar';
 import InquiryModal from '@/components/InquiryModal';
 import StaffAdminModal from '@/components/StaffAdminModal';
+import PageHeaderBanner from '@/components/PageHeaderBanner';
 import {
   Utensils,
   Sparkles,
@@ -19,6 +20,7 @@ import {
   Flame,
 } from 'lucide-react';
 import { buildWhatsAppUrl } from '@/lib/whatsapp';
+import WhatsAppIcon from '@/components/WhatsAppIcon';
 
 export default function DiningPage() {
   const [isInquiryModalOpen, setIsInquiryModalOpen] = useState(false);
@@ -68,41 +70,34 @@ export default function DiningPage() {
         onOpenStaffModal={() => setIsStaffModalOpen(true)}
       />
 
-      {/* Banner (Luxury Blue #0F2C59) */}
-      <section className="relative bg-[#0F2C59] text-white py-16 sm:py-24 overflow-hidden border-b border-blue-950">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <div className="flex items-center justify-center gap-2 text-xs text-stone-300 mb-4 font-medium">
-            <Link href="/" className="hover:text-[#E5A93C] transition-colors">Home</Link>
-            <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
-            <span className="text-[#E5A93C]">Bengali Dining &amp; Cuisine</span>
-          </div>
-
-          <span className="inline-flex items-center gap-1.5 text-xs text-[#E5A93C] bg-[#0A1E3D] border border-blue-800 px-3 py-1 rounded-full font-bold mb-3">
-            <Utensils className="w-3.5 h-3.5 text-[#E5A93C]" />
-            Heritage Culinary Traditions in Goa
-          </span>
-
-          <h1 className="font-serif text-3xl sm:text-5xl font-semibold tracking-tight text-white mb-4">
-            Taste of Bengal by the Arabian Sea
-          </h1>
-
-          <p className="max-w-2xl mx-auto text-sm sm:text-base text-stone-200 font-normal leading-relaxed mb-6">
-            Where Bengal&apos;s revered mustard marinades, tender Bhetki Paturi, and Sunday Kosha Mangsho meet fresh coastal Goa catch and beach breezes.
-          </p>
-
+      {/* Rich Atmospheric Page Hero Banner */}
+      <PageHeaderBanner
+        breadcrumbLabel="Bengali Dining & Cuisine"
+        badgeText="Heritage Culinary Traditions in Goa"
+        badgeIcon={<Utensils className="w-3.5 h-3.5 text-[#E5A93C]" />}
+        title="Taste of Bengal by the Arabian Sea"
+        subtitle="Where Bengal's revered mustard marinades, tender Bhetki Paturi, and Sunday Kosha Mangsho meet fresh coastal Goa catch and beach breezes."
+        backgroundImage="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1920&q=85"
+        highlights={[
+          { icon: <Utensils className="w-3.5 h-3.5 text-[#E5A93C]" />, label: 'Authentic Bengali Homestyle Recipes' },
+          { icon: <Sparkles className="w-3.5 h-3.5 text-emerald-400" />, label: 'Fresh Arabian Sea Daily Catch' },
+          { icon: <Flame className="w-3.5 h-3.5 text-[#FF6B6B]" />, label: 'Live Koraishuti Kochuri & Paturi' },
+        ]}
+        actions={
           <a
             href={buildWhatsAppUrl({
               specialRequest: 'Inquiring about in-house Bengali dining and customized meal requests',
+              source: 'dining_hero',
             })}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-[#FF6B6B] hover:bg-[#fa5b5b] text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-full shadow-xs transition-transform active:scale-98"
+            className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#20ba59] text-white font-bold text-xs sm:text-sm px-6 py-3.5 rounded-full shadow-lg transition-transform active:scale-98"
           >
-            <MessageCircle className="w-4 h-4 fill-white text-[#FF6B6B]" />
+            <WhatsAppIcon className="w-4 h-4 fill-white" />
             <span>Connect with Chef &amp; Concierge on WhatsApp</span>
           </a>
-        </div>
-      </section>
+        }
+      />
 
       {/* Culinary Narrative & Menus */}
       <section className="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex-1">

@@ -8,6 +8,7 @@ import StickyMobileBar from '@/components/StickyMobileBar';
 import InquiryModal from '@/components/InquiryModal';
 import StaffAdminModal from '@/components/StaffAdminModal';
 import LocationNearby from '@/components/LocationNearby';
+import PageHeaderBanner from '@/components/PageHeaderBanner';
 import {
   MapPin,
   ChevronRight,
@@ -16,8 +17,10 @@ import {
   Sparkles,
   Phone,
   MessageCircle,
+  Navigation,
+  Car,
 } from 'lucide-react';
-import { buildWhatsAppUrl, buildCallUrl, HOTEL_PHONE_DISPLAY } from '@/lib/whatsapp';
+import { buildWhatsAppUrl, buildCallUrl, HOTEL_PHONE_DISPLAY, GOOGLE_MAPS_LINK } from '@/lib/whatsapp';
 
 export default function LocationPage() {
   const [isInquiryModalOpen, setIsInquiryModalOpen] = useState(false);
@@ -30,29 +33,45 @@ export default function LocationPage() {
         onOpenStaffModal={() => setIsStaffModalOpen(true)}
       />
 
-      {/* Banner (Luxury Blue #0F2C59) */}
-      <section className="relative bg-[#0F2C59] text-white py-16 sm:py-24 overflow-hidden border-b border-blue-950">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <div className="flex items-center justify-center gap-2 text-xs text-stone-300 mb-4 font-medium">
-            <Link href="/" className="hover:text-[#E5A93C] transition-colors">Home</Link>
-            <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
-            <span className="text-[#E5A93C]">Location &amp; Distance Guide</span>
-          </div>
-
-          <span className="inline-flex items-center gap-1.5 text-xs text-[#E5A93C] bg-[#0A1E3D] border border-blue-800 px-3 py-1 rounded-full font-bold mb-3">
-            <MapPin className="w-3.5 h-3.5 text-[#E5A93C]" />
-            North Goa Beach Corridor · 450m to Calangute Beach
-          </span>
-
-          <h1 className="font-serif text-3xl sm:text-5xl font-semibold tracking-tight text-white mb-4">
-            Location &amp; Goa Distance Guide
-          </h1>
-
-          <p className="max-w-2xl mx-auto text-sm sm:text-base text-stone-200 font-normal leading-relaxed mb-6">
-            Located just 450 meters (a leisurely 5-minute stroll) from Calangute Beach, on the vibrant corridor connecting Calangute, Baga &amp; Anjuna.
-          </p>
-        </div>
-      </section>
+      {/* Atmospheric Page Hero Banner */}
+      <PageHeaderBanner
+        breadcrumbLabel="Location & Distance Guide"
+        badgeText="North Goa Beach Corridor · 450m to Beach"
+        badgeIcon={<MapPin className="w-3.5 h-3.5 text-[#E5A93C]" />}
+        title="Location & Goa Distance Guide"
+        subtitle="Located just 450 meters (a leisurely 5-minute stroll) from Calangute Beach, on the vibrant corridor connecting Calangute, Baga & Anjuna."
+        backgroundImage="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1920&q=85"
+        highlights={[
+          { icon: <Waves className="w-3.5 h-3.5 text-sky-400" />, label: '450m Stroll to Calangute Beach' },
+          { icon: <Bike className="w-3.5 h-3.5 text-[#E5A93C]" />, label: 'Scooter & Activa Hub at Gate' },
+          { icon: <Car className="w-3.5 h-3.5 text-emerald-400" />, label: 'Airport & Station Pickups' },
+        ]}
+        actions={
+          <>
+            <a
+              href={GOOGLE_MAPS_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 bg-[#FF6B6B] hover:bg-[#fa5b5b] text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-full shadow-lg transition-transform active:scale-98"
+            >
+              <Navigation className="w-4 h-4 fill-white text-[#FF6B6B]" />
+              <span>Get Turn-by-Turn GPS Route</span>
+            </a>
+            <a
+              href={buildWhatsAppUrl({
+                specialRequest: 'Inquiring about directions and hotel gate pickup assistance',
+                source: 'location_hero',
+              })}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 bg-white/15 hover:bg-white/25 backdrop-blur-md text-white font-bold text-xs sm:text-sm px-5 py-3 rounded-full border border-white/20 transition-all"
+            >
+              <MessageCircle className="w-4 h-4 fill-white text-[#FF6B6B]" />
+              <span>Ask Concierge on WhatsApp</span>
+            </a>
+          </>
+        }
+      />
 
       {/* Scooter & Transport Desk Feature */}
       <section className="py-10 bg-[#FAFAFA] border-b border-stone-200">

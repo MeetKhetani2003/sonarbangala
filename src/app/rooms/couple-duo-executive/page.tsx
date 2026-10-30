@@ -29,6 +29,7 @@ import {
 } from 'lucide-react';
 import { INITIAL_ROOMS } from '@/data/hotelData';
 import { buildWhatsAppUrl, buildCallUrl, HOTEL_PHONE_DISPLAY } from '@/lib/whatsapp';
+import WhatsAppIcon from '@/components/WhatsAppIcon';
 
 export default function CoupleRoomDetailPage() {
   const room = INITIAL_ROOMS[0]; // Couple / Duo Executive Room
@@ -290,9 +291,9 @@ export default function CoupleRoomDetailPage() {
                 href={whatsAppInquiryUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full flex items-center justify-center gap-2 bg-[#FF6B6B] hover:bg-[#fa5b5b] text-white font-bold py-3.5 px-4 rounded-xl shadow-xs transition-transform active:scale-98 text-sm mb-3"
+                className="w-full flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20ba59] text-white font-bold py-3.5 px-4 rounded-xl shadow-xs transition-transform active:scale-98 text-sm mb-3"
               >
-                <MessageCircle className="w-4 h-4 fill-white text-[#FF6B6B]" />
+                <WhatsAppIcon className="w-4 h-4 fill-white" />
                 <span>Inquire on WhatsApp</span>
               </a>
 
@@ -321,9 +322,9 @@ export default function CoupleRoomDetailPage() {
           href={whatsAppInquiryUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-1.5 bg-[#FF6B6B] text-white font-bold text-xs px-4 py-2.5 rounded-full shadow-md active:scale-95 transition-all"
+          className="flex items-center gap-1.5 bg-[#25D366] text-white font-bold text-xs px-4 py-2.5 rounded-full shadow-md active:scale-95 transition-all"
         >
-          <MessageCircle className="w-4 h-4 fill-white text-[#FF6B6B]" />
+          <WhatsAppIcon className="w-4 h-4 fill-white" />
           <span>Inquire on WhatsApp</span>
         </a>
       </div>

@@ -27,6 +27,7 @@ import {
 } from 'lucide-react';
 import { GalleryPhoto } from '@/types/hotel';
 import { buildWhatsAppUrl } from '@/lib/whatsapp';
+import WhatsAppIcon from '@/components/WhatsAppIcon';
 
 export default function Home() {
   const [isInquiryModalOpen, setIsInquiryModalOpen] = useState(false);
@@ -183,9 +184,9 @@ export default function Home() {
               })}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-[#FF6B6B] hover:bg-[#fa5b5b] text-white font-bold text-xs sm:text-sm px-5 py-3 rounded-full transition-transform active:scale-98 flex items-center gap-1.5 shadow-xs"
+              className="bg-[#25D366] hover:bg-[#20ba59] text-white font-bold text-xs sm:text-sm px-5 py-3 rounded-full transition-transform active:scale-98 flex items-center gap-1.5 shadow-md"
             >
-              <MessageCircle className="w-4 h-4 fill-white text-[#FF6B6B]" />
+              <WhatsAppIcon className="w-4 h-4 fill-white" />
               <span>Inquire on WhatsApp</span>
             </a>
           </div>

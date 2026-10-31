@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import RoomsSection from '@/components/RoomsSection';
+import HotelFacilities from '@/components/HotelFacilities';
 import GoaMomentsGallery from '@/components/GoaMomentsGallery';
 import ReviewsSection from '@/components/ReviewsSection';
 import LocationNearby from '@/components/LocationNearby';
@@ -155,7 +156,10 @@ export default function Home() {
       {/* 4. Room & Stay Showcase (Inquiry-Driven) */}
       <RoomsSection />
 
-      {/* 5. Honeymoon & Romantic Celebration Teaser Banner (Luxury Blue #0F2C59) */}
+      {/* 5. Verified Core Utilities & Facilities (Pool, AC, Wi-Fi, Hot Water, TV) */}
+      <HotelFacilities />
+
+      {/* 6. Honeymoon & Romantic Celebration Teaser Banner (Luxury Blue #0F2C59) */}
       <section className="py-14 bg-[#0F2C59] text-white border-y border-blue-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-2 text-center md:text-left">

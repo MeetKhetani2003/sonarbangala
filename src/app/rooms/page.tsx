@@ -8,6 +8,7 @@ import StickyMobileBar from '@/components/StickyMobileBar';
 import InquiryModal from '@/components/InquiryModal';
 import StaffAdminModal from '@/components/StaffAdminModal';
 import PageHeaderBanner from '@/components/PageHeaderBanner';
+import HotelFacilities from '@/components/HotelFacilities';
 import {
   Users,
   Bed,
@@ -27,6 +28,7 @@ import {
   ChevronRight,
   MapPin,
   CalendarCheck,
+  Waves,
 } from 'lucide-react';
 import { INITIAL_ROOMS } from '@/data/hotelData';
 import { buildWhatsAppUrl } from '@/lib/whatsapp';
@@ -58,9 +60,10 @@ export default function RoomsPage() {
         subtitle="Thoughtfully designed for romantic couple retreats, celebratory honeymoons, and relaxed family holidays in North Goa."
         backgroundImage="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1920&q=85"
         highlights={[
+          { icon: <Waves className="w-3.5 h-3.5 text-sky-400" />, label: 'Swimming Pool Access' },
           { icon: <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />, label: '100% Couple Friendly Stay' },
           { icon: <MapPin className="w-3.5 h-3.5 text-[#E5A93C]" />, label: '450m Walk to Calangute Beach' },
-          { icon: <Sparkles className="w-3.5 h-3.5 text-[#E5A93C]" />, label: 'Romantic Bed Art on Request' },
+          { icon: <Sparkles className="w-3.5 h-3.5 text-[#E5A93C]" />, label: 'AC, Wi-Fi, Hot Water & TV' },
           { icon: <CheckCircle className="w-3.5 h-3.5 text-emerald-400" />, label: 'Zero Extra OTA Taxes' },
         ]}
         actions={
@@ -198,6 +201,9 @@ export default function RoomsPage() {
           </button>
         </div>
       </section>
+
+      {/* Verified Hotel Utilities & Facilities (Pool, AC, Wi-Fi, Hot Water, TV) */}
+      <HotelFacilities />
 
       <Footer
         onOpenInquiryModal={() => setIsInquiryModalOpen(true)}

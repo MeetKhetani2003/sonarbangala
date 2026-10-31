@@ -28,15 +28,16 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   title: "Hotel Sonar Bangla Goa | Boutique Stay Near Calangute Beach",
   description:
-    "Authentic Bengali hospitality and coastal serenity in Goa. 5 mins walk to Calangute Beach. Couple-friendly rooms, romantic honeymoon bed art, and direct WhatsApp concierge booking.",
+    "Authentic Bengali hospitality near Calangute Beach, Goa. Outdoor swimming pool, split AC, free high-speed Wi-Fi, 24/7 hot water, smart TV, couple-friendly rooms & direct WhatsApp booking.",
   keywords: [
     "Hotel Sonar Bangla Goa",
+    "Hotel in Calangute with swimming pool",
     "Best hotel in Calangute Goa",
     "Couple friendly hotel in Goa near beach",
     "Honeymoon stay Goa with bed decoration",
-    "Boutique hotel North Goa",
+    "Boutique hotel North Goa with pool",
     "Bengali hotel in Goa with authentic Bengali food",
-    "Calangute Baga beach hotels",
+    "Calangute Baga beach hotels with AC and pool",
   ],
   authors: [{ name: "Hotel Sonar Bangla Goa" }],
   creator: "Hotel Sonar Bangla",

@@ -18,6 +18,7 @@ import {
   X,
   Heart,
   Compass,
+  Waves,
 } from 'lucide-react';
 import WhatsAppIcon from './WhatsAppIcon';
 import QuickInquiryBar from './QuickInquiryBar';
@@ -44,11 +45,11 @@ const HERO_SLIDES: HeroSlide[] = [
     iconName: 'Heart',
     badge: '100% Couple Friendly · Private Balconies',
     title: 'Experience Premium Comfort & Romance in Goa',
-    subtitle: 'Quiet couple sanctuaries with private sit-out balconies, whisper-quiet AC, and bespoke romantic bed calligraphy on arrival.',
+    subtitle: 'Quiet couple sanctuaries with swimming pool access, private sit-out balconies, whisper-quiet split AC, and bespoke romantic bed calligraphy on arrival.',
     image: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=2200&q=85',
     ctaText: 'Inquire Couple Stay',
     roomLink: '/rooms/couple-duo-executive',
-    featurePill: '🌸 Romantic Bed Art & Candlelight on Request',
+    featurePill: '🏊 Swimming Pool · ❄️ AC · 📶 Wi-Fi · 🚿 24/7 Hot Water · 📺 TV',
     specialRequest: 'Inquiring about Couple Executive Room with Balcony and romantic setup',
   },
   {
@@ -93,6 +94,7 @@ const HERO_SLIDES: HeroSlide[] = [
 ];
 
 const PREVIEW_GALLERY = [
+  { url: 'https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?auto=format&fit=crop&w=1400&q=85', caption: 'Clean Outdoor Swimming Pool' },
   { url: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1400&q=85', caption: 'Executive Duo Couple Balcony Room' },
   { url: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1400&q=85', caption: 'Fresh Rose Petal Honeymoon Bed Art' },
   { url: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=1400&q=85', caption: 'Spacious Family & Group Suite' },
@@ -258,6 +260,11 @@ export default function Hero() {
                 <span className="hidden sm:inline-flex items-center gap-1.5 bg-black/50 text-stone-200 px-3 py-1 rounded-full text-[11px] font-medium border border-white/10 backdrop-blur-md">
                   <MapPin className="w-3.5 h-3.5 text-[#E5A93C]" />
                   Calangute Beach 450m
+                </span>
+
+                <span className="hidden md:inline-flex items-center gap-1.5 bg-sky-950/70 text-sky-300 px-3 py-1 rounded-full text-[11px] font-semibold border border-sky-400/30 backdrop-blur-md">
+                  <Waves className="w-3.5 h-3.5 text-sky-400" />
+                  Swimming Pool
                 </span>
               </div>
 

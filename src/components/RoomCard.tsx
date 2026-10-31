@@ -15,6 +15,7 @@ import {
   Sun,
   ShieldCheck,
   Refrigerator,
+  Waves,
   Sparkles,
   MessageCircle,
   Eye,
@@ -76,6 +77,8 @@ export default function RoomCard({
         return <Wifi className="w-3 h-3 text-blue-600" />;
       case 'Flame':
         return <Flame className="w-3 h-3 text-[#E5A93C]" />;
+      case 'Waves':
+        return <Waves className="w-3 h-3 text-sky-600" />;
       case 'Tv':
         return <Tv className="w-3 h-3 text-stone-700" />;
       case 'Coffee':
@@ -253,9 +256,9 @@ export default function RoomCard({
             </div>
           )}
 
-          {/* 5. Minimalist Amenity Chips */}
+          {/* 5. Minimalist Amenity Chips (Real Core Facilities) */}
           <div className="mt-2 flex flex-wrap gap-1">
-            {room.amenities.slice(0, 3).map((amenity) => (
+            {room.amenities.slice(0, 5).map((amenity) => (
               <span
                 key={amenity.label}
                 className="inline-flex items-center gap-1 bg-[#FAFAFA] text-stone-700 text-[9px] px-1.5 py-0.5 rounded border border-stone-200 font-medium"
@@ -264,9 +267,9 @@ export default function RoomCard({
                 <span>{amenity.label}</span>
               </span>
             ))}
-            {room.amenities.length > 3 && (
+            {room.amenities.length > 5 && (
               <span className="text-[9px] text-stone-400 font-medium self-center pl-0.5">
-                +{room.amenities.length - 3}
+                +{room.amenities.length - 5}
               </span>
             )}
           </div>

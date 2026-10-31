@@ -182,14 +182,17 @@ export default function Footer({ onOpenStaffModal, onOpenInquiryModal }: FooterP
             </div>
 
             <div className="flex flex-wrap gap-1.5 mb-4 text-[11px] text-stone-300 font-semibold">
-              <span className="bg-[#0F2C59] border border-blue-800 px-2 py-1 rounded-md">
-                Calangute Beach (5 Min Walk)
+              <span className="bg-[#0F2C59] border border-blue-800 px-2 py-1 rounded-md text-sky-300">
+                Swimming Pool Access
               </span>
               <span className="bg-[#0F2C59] border border-blue-800 px-2 py-1 rounded-md">
-                100% Couple Friendly Stay
+                Split AC &amp; Free Wi-Fi
               </span>
               <span className="bg-[#0F2C59] border border-blue-800 px-2 py-1 rounded-md">
-                Honeymoon Bed Art
+                24/7 Hot Water &amp; TV
+              </span>
+              <span className="bg-[#0F2C59] border border-blue-800 px-2 py-1 rounded-md">
+                Calangute Beach 450m
               </span>
             </div>
 

@@ -171,8 +171,8 @@ export default function RoomsPage() {
                 </tr>
                 <tr>
                   <td className="py-3.5 px-4 font-semibold text-stone-900">Direct Rate</td>
-                  <td className="py-3.5 px-4 font-serif text-base font-bold text-amber-900">₹2,499 / night</td>
-                  <td className="py-3.5 px-4 font-serif text-base font-bold text-stone-900">₹4,299 / night</td>
+                  <td className="py-3.5 px-4 font-serif text-base font-bold text-amber-900">₹1,800 / person / night</td>
+                  <td className="py-3.5 px-4 font-serif text-base font-bold text-stone-900">₹2,200 / person / night</td>
                 </tr>
               </tbody>
             </table>

@@ -26,9 +26,9 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Hotel Sonar Bangla Goa | Boutique Stay Near Calangute Beach",
+  title: "Hotel Sonar Bangla Goa | Best Couple & Family Hotel Near Calangute Beach",
   description:
-    "Authentic Bengali hospitality near Calangute Beach, Goa. Outdoor swimming pool, split AC, free high-speed Wi-Fi, 24/7 hot water, smart TV, couple-friendly rooms & direct WhatsApp booking.",
+    "Boutique hotel 450m from Calangute Beach, North Goa. Couple-friendly rooms from ₹1,800/person/night. Swimming pool, AC, free Wi-Fi, 24/7 hot water & authentic Bengali food. Zero OTA taxes. Book on WhatsApp: +91 90640 22151",
   keywords: [
     "Hotel Sonar Bangla Goa",
     "Hotel in Calangute with swimming pool",
@@ -38,11 +38,18 @@ export const metadata: Metadata = {
     "Boutique hotel North Goa with pool",
     "Bengali hotel in Goa with authentic Bengali food",
     "Calangute Baga beach hotels with AC and pool",
+    "Hotel Shonarbangla Goa",
+    "best hotel near Calangute beach with pool",
+    "couple friendly hotel Goa 2025",
+    "honeymoon hotel Goa North",
+    "Bengali hotel Calangute Goa",
+    "hotel near Baga beach",
+    "direct booking hotel Goa lowest rate",
   ],
   authors: [{ name: "Hotel Sonar Bangla Goa" }],
   creator: "Hotel Sonar Bangla",
   publisher: "Hotel Sonar Bangla",
-  metadataBase: new URL("https://hotelsonarbanglagoa.com"),
+  metadataBase: new URL("https://www.hotelshonarbangla.in"),
   alternates: {
     canonical: "/",
   },
@@ -51,17 +58,17 @@ export const metadata: Metadata = {
     apple: "/images/logo-icon.png",
   },
   openGraph: {
-    title: "Hotel Sonar Bangla Goa | Couple & Family Stay Near Beach",
+    title: "Hotel Sonar Bangla Goa | Couple & Family Stay Near Calangute Beach",
     description:
-      "A serene coastal sanctuary 450 meters from Calangute Beach. Couple-friendly rooms, romantic honeymoon setups, and direct WhatsApp booking.",
-    url: "https://hotelsonarbanglagoa.com",
+      "Boutique hotel 450m from Calangute Beach, North Goa. Couple-friendly rooms from ₹1,800/person. Pool, AC, Wi-Fi, Bengali food & honeymoon decor. Direct WhatsApp booking.",
+    url: "https://www.hotelshonarbangla.in",
     siteName: "Hotel Sonar Bangla Goa",
     images: [
       {
-        url: "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1200&q=85",
+        url: "https://www.hotelshonarbangla.in/rooms/hotel-exterior.jpg",
         width: 1200,
         height: 630,
-        alt: "Hotel Sonar Bangla Goa Couple Executive Room",
+        alt: "Hotel Sonar Bangla Goa — Boutique Hotel Near Calangute Beach",
       },
     ],
     locale: "en_IN",
@@ -69,10 +76,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Hotel Sonar Bangla Goa | Best Couple & Family Stay Near Beach",
+    title: "Hotel Sonar Bangla Goa | Couple & Family Stay Near Calangute Beach",
     description:
-      "5 mins walk from Calangute Beach. Couple friendly rooms, honeymoon decor, and authentic Bengali hospitality.",
-    images: ["https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1200&q=85"],
+      "Boutique hotel 450m from Calangute Beach, North Goa. Couple-friendly rooms from ₹1,800/person. Pool, AC, Wi-Fi, Bengali food & honeymoon decor. Direct WhatsApp booking.",
+    images: ["https://www.hotelshonarbangla.in/rooms/hotel-exterior.jpg"],
   },
   robots: {
     index: true,

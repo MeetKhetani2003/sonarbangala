@@ -5,6 +5,7 @@ export interface Room {
   category: 'couple' | 'family';
   price: number;
   originalPrice: number;
+  priceNote?: string;
   capacity: string;
   bedType: string;
   size: string;

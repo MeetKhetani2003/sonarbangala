@@ -217,10 +217,10 @@ export default function RoomCard({
                 <span className="font-serif text-lg font-bold text-[#0F2C59]">
                   ₹{room.price}
                 </span>
-                <span className="text-[10px] text-stone-500 font-medium">/nt</span>
               </div>
+              <span className="text-[9px] text-stone-500 font-medium block">{room.priceNote ?? 'per person / night'}</span>
               {discountAmount > 0 && (
-                <span className="text-[9px] text-emerald-700 font-bold bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-200 inline-block">
+                <span className="text-[9px] text-emerald-700 font-bold bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-200 inline-block mt-0.5">
                   Save ₹{discountAmount}
                 </span>
               )}
